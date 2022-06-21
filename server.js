@@ -8,7 +8,7 @@ const multer=require('multer');
 const admin=require('firebase-admin');
 const serviceAccount=require('./serviceAccountKey.json');
 /*
- * INICIALIZAR FIREBASE ADMIN  
+ * INICIALIZAR FIREBASE ADMIN 1  
  */
 admin.initializeApp(
     {

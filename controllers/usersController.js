@@ -84,7 +84,7 @@ module.exports={
         try {   
 
             const user=JSON.parse(req.body.user);
-            console.log(` Datos enviados del usuario:  ${user} `); 
+            console.log(` Datos enviados del usuario:  ${JSON.stringify(user)} `); 
             const files=req.files;            
             if(files.length>0){
                 const pathImage=`image_${Date.now()}`; // NOMBRE DEL ARCHIVO
@@ -95,10 +95,10 @@ module.exports={
                 }
             }
             await User.update(user);
+            console.log(` Datos enviados del usuario:  ${user} `); 
             return res.status(201).json({
                 success:true,
-                message:'Los datos del usuario se actualizaron correctamente ',
-                data: data.id
+                message:'Los datos del usuario se actualizaron correctamente '                
             });
         } catch (error) {
            console.log(`Error : ${error}`); 

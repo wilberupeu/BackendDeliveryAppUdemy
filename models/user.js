@@ -112,6 +112,14 @@ user.password=myPasswordHashed;
 }
 
 User.update=(user)=>{
+
+    console.log(` user.id:  ${user.id} `); 
+    console.log(` user.name:  ${user.name} `); 
+    console.log(` user.lastname:  ${user.lastname} `); 
+    console.log(` user.phone:  ${user.phone} `); 
+    console.log(` user.image:  ${user.image} `); 
+       
+
     const sql= `
     UPDATE 
          users

@@ -19,7 +19,7 @@ module.exports={
                 message:'Error al obtener los usuarios'
             });         
         }
-    },
+    }, 
 
     async findById(req,res,next){
         try{

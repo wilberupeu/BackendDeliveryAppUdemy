@@ -25,7 +25,7 @@ module.exports={
         try{
             const id=req.params.id;
 
-            const data=await User.findById(id);
+            const data=await User.findByUserId(id);
             console.log(`Usuarios: ${data} `);
             return res.status(201).json(data);
         }

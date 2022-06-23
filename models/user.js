@@ -68,6 +68,37 @@ User.findByEmail=(email)=>{
     return db.oneOrNone(sql,email);
 }
 
+User.findByUserId=(id)=>{
+    const sql=`
+    select
+        u.id,
+        u.email,
+        u.name,
+        u.lastname,
+        u.image,
+        u.phone,
+        u.password,
+        u.session_token,
+        json_agg(
+            json_build_object(
+		'id', r.id,
+		'name', r.name,
+		'image', r.image,
+		'route', r.route
+	    )) as roles
+    from
+    users as u
+    inner join user_has_roles as uhr on uhr.id_user=u.id
+    inner join roles as r on r.id=uhr.id_rol
+
+    where 
+    u.id=$1
+    group by 
+         u.id    
+    `;
+    return db.oneOrNone(sql,id);
+}
+
 User.create=(user)=>{
 
 const myPasswordHashed=crypto.createHash('md5').update(user.password).digest('hex');

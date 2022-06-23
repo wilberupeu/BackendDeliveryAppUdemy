@@ -140,6 +140,21 @@ user.password=myPasswordHashed;
         new Date() 
     ]);
 
+} 
+User.updateToken=(id,token)=>{
+    console.log(` id:  ${id} `); 
+    console.log(` token:  ${token} `); 
+    const sql= `
+    UPDATE 
+         users
+    SET
+         session_token=$2
+    WHERE
+          id=$1
+    `;
+    return db.none(sql,[id,
+        token
+    ]);
 }
 
 User.update=(user)=>{

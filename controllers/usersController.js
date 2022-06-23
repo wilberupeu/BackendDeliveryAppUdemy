@@ -162,6 +162,8 @@ module.exports={
                     session_token: `JWT ${token}`,
                     roles:myUser.roles
                 }
+                
+                await User.updateToken(myUser.id,`JWT ${token}`);
 
                 console.log('USUARIO ENVIADO  ${data} ');                
 

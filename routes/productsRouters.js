@@ -1,4 +1,4 @@
-const ProductsController=require('../controllers/ProductsController');
+const ProductsController=require('../controllers/productsController');
 const passport=require('passport');
 
 module.exports=(app,upload)=>{

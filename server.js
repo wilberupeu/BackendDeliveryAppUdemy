@@ -24,6 +24,7 @@ const upload=multer({
 * RUTAS
 */
 const users=require('./routes/usersRoutes');
+const categories=require('./routes/categoriesRoutes');
 
 const port=process.env.PORT || 3000;
 app.set('port',port);
@@ -40,6 +41,7 @@ app.use(express.urlencoded({
 * LLAMANDO A LA RUTAS
 */
 users(app,upload); 
+categories(app); 
 
 app.use(cors());
 app.disable('x-powered-by');

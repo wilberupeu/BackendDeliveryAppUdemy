@@ -14,7 +14,7 @@ users
 return db.manyOrNone(sql);
 
 } 
-
+  
 User.findById=(id, callback)=>{
 
     const sql=`
@@ -34,7 +34,7 @@ User.findById=(id, callback)=>{
     `;
 
     return db.oneOrNone(sql,id).then(user=>{callback(null,user)});
-}
+} 
 
 
 User.findByEmail=(email)=>{

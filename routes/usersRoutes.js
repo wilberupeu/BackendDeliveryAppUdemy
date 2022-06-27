@@ -1,12 +1,14 @@
 const UsersController=require('../controllers/usersController');
 const passport=require('passport');
 
+
 module.exports=(app,upload)=>{
     // TRAER DATOS
     app.get('/api/users/getAll',UsersController.getAll);
-    app.get('/api/users/findById/:id',
-    passport.authenticate('jwt',{session:false}),
-    UsersController.findById);
+    //passport.authenticate('jwt',{session:false}),
+    app.get('/api/users/findById/:id',     
+    UsersController.findByUserId); 
+ 
 
     //GUARDAR DATOS
     app.post(
@@ -15,11 +17,12 @@ module.exports=(app,upload)=>{
         UsersController.registerWithImage);
 
     app.post('/api/users/login',UsersController.login);
-     
+    
     // ACTUALIZAR DATOS
+
     app.put(
         '/api/users/update',
-        passport.authenticate('jwt',{session:false}),
+       // passport.authenticate('jwt',{session:false}),
         upload.array('image',1),
         UsersController.update);    
 } 

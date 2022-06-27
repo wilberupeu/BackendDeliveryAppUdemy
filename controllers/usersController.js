@@ -5,7 +5,7 @@ const keys = require('../config/keys');
 const storage=require('../utils/cloud_storage');
 
 module.exports={
-
+ 
     async getAll(req,res,next){
         try{
             const data=await User.getAll();
@@ -20,11 +20,9 @@ module.exports={
             });         
         }
     }, 
-
-    async findById(req,res,next){
+    async findByUserId(req,res,next){
         try{
             const id=req.params.id;
-
             const data=await User.findByUserId(id);
             console.log(`Usuarios: ${data} `);
             return res.status(201).json(data);
@@ -41,11 +39,8 @@ module.exports={
         try {   
             const user=req.body;    
             console.log(`user : ${user}`); 
-
             const data=await User.create(user);
-
             await Rol.create(data.id,1); // ROL POR DEFECTO (CLIENTE)
-
             return res.status(201).json({
                 success:true,
                 message:'El registro se realizo correctamente ',
@@ -62,13 +57,11 @@ module.exports={
     }, 
 
     async registerWithImage(req,res,next){
+        
         try {   
-
             const user=JSON.parse(req.body.user);
             console.log(` Datos enviados del usuario:  ${user} `); 
-
             const files=req.files;
-            
             if(files.length>0){
                 const pathImage=`image_${Date.now()}`; // NOMBRE DEL ARCHIVO
                 const url = await storage(files[0],pathImage);
@@ -148,7 +141,7 @@ module.exports={
                 console.log(' isMatched ');
                 const token=jwt.sign({id:myUser.id,email:myUser.email},keys.secretOrKey,{
 // expiresIn:(60*60*24) // 1 HORA
- 
+                 expiresIn:(60*2) // 2 MINUTOS
                 });  
  
                 const data={

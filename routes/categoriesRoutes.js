@@ -1,7 +1,7 @@
-const CategoriesController=require('../controllers/CategoriesController');
+const CategoriesController=require('../controllers/categoriesController');
 const passport=require('passport');
 
-module.exports=(app,upload)=>{
+module.exports=(app)=>{
 
         //GUARDAR DATOS
         app.post(

@@ -2,6 +2,21 @@ const db= require('../config/config');
 
 const Category = {};
 
+Category.getAll=()=>{
+    const sql=`
+    SELECT
+        id,
+        name,
+        description
+     FROM 
+        categories
+      ORDER BY
+       name
+    `;
+
+    return db.manyOrNones(sql);
+
+}
 
 Category.create=(category)=>{
     const sql=`

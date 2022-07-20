@@ -13,11 +13,12 @@ types.setTypeParser(1114,function(stringValue){
 const databaseConfig={
     'host':'127.0.0.1',
     'port':5432,
-    'database':'delivery_db',
+    'database':'postgres',
     'user':'postgres',
-    'password':'ADMIN'
+    'password':'admin'
 };  
-
+//'database':'delivery_db',
+// 'password':'ADMIN'
 const db= pgp(databaseConfig);
 module.exports=db;
 

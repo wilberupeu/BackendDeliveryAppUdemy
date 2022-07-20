@@ -26,7 +26,8 @@ User.findById=(id, callback)=>{
     image,
     phone,
     password,
-    session_token
+    session_token,
+    notification_token
    from
     users
    where 
@@ -35,7 +36,55 @@ User.findById=(id, callback)=>{
 
     return db.oneOrNone(sql,id).then(user=>{callback(null,user)});
 } 
+User.findDeliveryMen=()=>{
+    const sql=`
+    select
+        U.id,
+        U.email,
+        U.name,
+        U.lastname,
+        U.image,
+        U.phone,
+        U.password,
+        U.session_token,
+        U.notification_token
+    FROM
+        users AS U
+    INNER JOIN 
+        user_has_roles AS UHR
+    ON 
+        UHR.id_user=U.id
+    INNER JOIN 
+        roles AS R
+    ON
+        R.id=UHR.id_rol
+    WHERE
+        R.id=3
+        
+    `;
+    return db.manyOrNone(sql);
+}
 
+User.getAdminsNotificationTokens=()=>{
+ 
+    const sql=`
+    SELECT 
+        U.notification_token
+    FROM
+        users AS U
+    INNER JOIN 
+        user_has_roles AS UHR
+    ON
+        UHR.id_user=U.id
+    INNER JOIN 
+        roles AS R
+    ON
+        R.id=UHR.id_rol
+    WHERE
+        R.id=2
+    `;
+    return db.manyOrNone(sql);
+}
 
 User.findByEmail=(email)=>{
     const sql=`
@@ -48,6 +97,7 @@ User.findByEmail=(email)=>{
         u.phone,
         u.password,
         u.session_token,
+        u.notification_token,
         json_agg(
             json_build_object(
 		'id', r.id,
@@ -79,6 +129,7 @@ User.findByUserId=(id)=>{
         u.phone,
         u.password,
         u.session_token,
+        u.notification_token,
         json_agg(
             json_build_object(
 		'id', r.id,
@@ -149,6 +200,22 @@ User.updateToken=(id,token)=>{
          users
     SET
          session_token=$2
+    WHERE
+          id=$1
+    `;
+    return db.none(sql,[id,
+        token
+    ]);
+}
+
+User.updateNotificationToken=(id,token)=>{
+    console.log(` id:  ${id} `); 
+    console.log(` token:  ${token} `); 
+    const sql= `
+    UPDATE 
+         users
+    SET
+         notification_token=$2
     WHERE
           id=$1
     `;

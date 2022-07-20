@@ -14,7 +14,7 @@ Category.getAll=()=>{
        name
     `;
 
-    return db.manyOrNones(sql);
+    return db.manyOrNone(sql);
 
 }
 

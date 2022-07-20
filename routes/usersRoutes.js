@@ -9,6 +9,13 @@ module.exports=(app,upload)=>{
     app.get('/api/users/findById/:id',     
     UsersController.findByUserId); 
  
+    app.get('/api/users/findDeliveryMen',     
+    UsersController.findDeliveryMen); 
+
+    app.get('/api/users/getAdminsNotificationTokens',     
+    UsersController.getAdminsNotificationTokens); 
+
+    
 
     //GUARDAR DATOS
     app.post(
@@ -24,7 +31,13 @@ module.exports=(app,upload)=>{
         '/api/users/update',
        // passport.authenticate('jwt',{session:false}),
         upload.array('image',1),
-        UsersController.update);    
+        UsersController.update); 
+        
+        app.put(
+            '/api/users/updateNotificationToken',
+           // passport.authenticate('jwt',{session:false}),
+ 
+            UsersController.updateNotificationToken);         
 } 
 
 

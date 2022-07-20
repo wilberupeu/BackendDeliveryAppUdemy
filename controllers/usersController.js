@@ -3,6 +3,7 @@ const Rol = require('../models/rol');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const storage=require('../utils/cloud_storage');
+const { getAdminsNotificationTokens } = require('../models/user');
 
 module.exports={
  
@@ -35,6 +36,42 @@ module.exports={
             });         
         }
     },    
+    async findDeliveryMen(req,res,next){
+        try{
+            
+            const data=await User.findDeliveryMen();
+            console.log(`Repartidores: ${data} `);
+            return res.status(201).json(data);
+        }
+        catch(error){
+            console.log(`Error : ${error}`);   
+            return res.status(501).json({
+                success:false,
+                message:'Error al obtener los repartidores '
+            });         
+        }
+    },    
+    async getAdminsNotificationTokens(req,res,next){
+        try{
+            
+            const data=await User.getAdminsNotificationTokens();
+            let tokens=[];
+
+            data.forEach(d=>{
+                tokens.push(d.notification_token)
+            });
+
+            console.log(`tokens: ${tokens} `);
+            return res.status(201).json(tokens);
+        }
+        catch(error){
+            console.log(`Error : ${error}`);   
+            return res.status(501).json({
+                success:false,
+                message:'Error al obtener los tokens '
+            });         
+        }
+    },     
     async register(req,res,next){
         try {   
             const user=req.body;    
@@ -182,8 +219,28 @@ module.exports={
                 error:error
             });
         }
-    }
+    },
 
+    async updateNotificationToken(req,res,next){
+        try {   
+            const body=req.body;
+            console.log('Informacion del usuario',body);
+            await User.updateNotificationToken(body.id,body.notification_token);
+ 
+            return res.status(201).json({
+                success:true,
+                message:'El token de notificaciones se ha almacenado correctamente'
+                 
+            });
+        } catch (error) {
+           console.log(`Error : ${error}`); 
+           return res.status(501).json({
+               success: false,
+               message:'Hubo un error al tratar de actualizar el token del usuario', 
+               error:error
+           });
+        }
+    },
 
 }
 

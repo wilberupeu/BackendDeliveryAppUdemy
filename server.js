@@ -7,6 +7,24 @@ const cors=require('cors');
 const multer=require('multer');
 const admin=require('firebase-admin');
 const serviceAccount=require('./serviceAccountKey.json');
+const passport=require('passport');
+const io=require('socket.io')(server);
+const mercadopago=require('mercadopago');
+
+/**
+ * MERCADO PAGO CONFIGURACION
+ */
+
+mercadopago.configure({
+    access_token:'TEST-55'
+});
+
+/*
+ *  SOCKETS 
+ */
+
+const orderDeliverySocket=require('./sockets/orders_delivery_socket');
+
 /*
  * INICIALIZAR FIREBASE ADMIN  
  */
@@ -26,6 +44,11 @@ const upload=multer({
 const users=require('./routes/usersRoutes');
 const categories=require('./routes/categoriesRoutes');
 const products=require('./routes/productsRouters');
+const address=require('./routes/addressRoutes');
+const orders=require('./routes/ordersRoutes');
+const orders_delivery_socket = require('./sockets/orders_delivery_socket');
+const mercadoPagoRoutes=require('./routes/mercadoPagoRoutes');
+
 
 const port=process.env.PORT || 3000;
 app.set('port',port);
@@ -43,16 +66,22 @@ app.use(express.urlencoded({
 */
 users(app,upload); 
 categories(app); 
+address(app); 
+orders(app);
 products(app,upload); 
+mercadoPagoRoutes(app); 
+
 
 
 app.use(cors());
 app.disable('x-powered-by');
 app.set('port',port);
 
+//LLAMAR A SOCKETS
 
+orderDeliverySocket(io);
 
-server.listen(3000,'10.182.0.2' || 'localhost', function(){
+server.listen(3000,'10.2.203.119' || 'localhost', function(){
 
     console.log('Aplicacion de NodeJS  process.pid '+process.pid+'  , port '+port+' Iniciada ');
 }); 

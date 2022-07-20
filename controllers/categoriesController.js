@@ -14,9 +14,7 @@ module.exports={
             console.log(` Categorias ${JSON.stringify(data)} `);
 
             return res.status(201).json(
-                {
-                    data
-                }
+                data
             );            
 
         } 

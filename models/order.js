@@ -236,7 +236,7 @@ Order.findByClientAndStatus=(id_client,status)=>{
 Order.create=(order)=>{
     const sql=`
     INSERT INTO 
-        order (
+        orders (
             id_client,
             id_address,
             status,

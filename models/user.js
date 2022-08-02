@@ -14,28 +14,29 @@ users
 return db.manyOrNone(sql);
 
 } 
-  
-User.findById=(id, callback)=>{
 
-    const sql=`
-    select
-    id,
-    email,
-    name,
-    lastname,
-    image,
-    phone,
-    password,
-    session_token,
-    notification_token
-   from
-    users
-   where 
-     id=$1    
-    `;
+User.findById = (id, callback) => {
 
-    return db.oneOrNone(sql,id).then(user=>{callback(null,user)});
-} 
+    const sql = `
+    SELECT
+        id,
+        email,
+        name,
+        lastname,
+        image,
+        phone,
+        password,
+        session_token,
+        notification_token
+    FROM
+        users
+    WHERE
+        id = $1`;
+    
+    return db.oneOrNone(sql, id).then(user => { callback(null, user); })
+
+}
+
 User.findDeliveryMen=()=>{
     const sql=`
     select

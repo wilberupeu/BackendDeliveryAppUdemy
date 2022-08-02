@@ -79,11 +79,14 @@ module.exports={
         try {
             let order=req.body;
             order.status='PAGADO';
-            console.log(`Dirección enviada : ${order} `);
+            console.log(`Orden enviada : ${JSON.stringify(order)}    `);
             const data= await Order.create(order);
-
+           
             // RECORRER TODOS LOS PRODUCTOS AGREGADOS A LA ORDEN
             for(const product of order.products){
+
+                console.log(`---> Producto : ${JSON.stringify(product)}    `);  
+
 await OrderHasProduct.create(data.id,product.id,product.quantity);
             }
             return res.status(201).json(

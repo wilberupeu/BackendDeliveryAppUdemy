@@ -3,41 +3,40 @@ const passport=require('passport');
 
 
 module.exports=(app,upload)=>{
+
     // TRAER DATOS
-    app.get('/api/users/getAll',UsersController.getAll);
-    //passport.authenticate('jwt',{session:false}),
-    app.get('/api/users/findById/:id',     
-    UsersController.findByUserId); 
- 
-    app.get('/api/users/findDeliveryMen',     
+    app.get('/api/users/getAll',UsersController.getAll);    
+    app.get('/api/users/findById/:id',
+    passport.authenticate('jwt', {session: false}),      
+    UsersController.findByUserId);  
+    app.get('/api/users/findDeliveryMen', 
+    passport.authenticate('jwt', {session: false}),    
     UsersController.findDeliveryMen); 
-
     app.get('/api/users/getAdminsNotificationTokens',     
+    passport.authenticate('jwt', {session: false}),
     UsersController.getAdminsNotificationTokens); 
-
-    
-
-    //GUARDAR DATOS
+  
+ 
+    // GUARDAR DATOS
     app.post(
         '/api/users/create',
         upload.array('image',1),
         UsersController.registerWithImage);
-
     app.post('/api/users/login',UsersController.login);
+    app.post('/api/users/logout', UsersController.logout);
+
     
     // ACTUALIZAR DATOS
-
     app.put(
         '/api/users/update',
-       // passport.authenticate('jwt',{session:false}),
+        passport.authenticate('jwt', {session: false}),
         upload.array('image',1),
-        UsersController.update); 
-        
-        app.put(
+        UsersController.update);          
+    app.put(
             '/api/users/updateNotificationToken',
-           // passport.authenticate('jwt',{session:false}),
- 
-            UsersController.updateNotificationToken);         
+            passport.authenticate('jwt', {session: false}), 
+            UsersController.updateNotificationToken);
+
 } 
 
 
